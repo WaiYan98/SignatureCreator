@@ -8,6 +8,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+
+import com.example.signaturepad.fragment.ColorsDialogFragment;
+import com.example.signaturepad.fragment.PenSizeDialogFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,6 +21,16 @@ public class SignatureCreatorActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.img_pen)
+    ImageView imgPen;
+    @BindView(R.id.img_color)
+    ImageView imgColor;
+    @BindView(R.id.img_background_color)
+    ImageView imgBackgroundColor;
+    @BindView(R.id.img_clear_pad)
+    ImageView imgClearPad;
+
+    private ColorsDialogFragment colorsDialogFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +40,32 @@ public class SignatureCreatorActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
+
+
+        imgPen.setOnClickListener(v -> {
+
+            PenSizeDialogFragment penSizeDialogFragment = new PenSizeDialogFragment();
+            penSizeDialogFragment.show(getSupportFragmentManager(), "");
+
+        });
+
+        imgColor.setOnClickListener(v -> {
+
+            colorsDialogFragment = new ColorsDialogFragment();
+            colorsDialogFragment.show(getSupportFragmentManager(), "");
+
+        });
+
+        imgBackgroundColor.setOnClickListener(v -> {
+
+            colorsDialogFragment = new ColorsDialogFragment();
+            colorsDialogFragment.show(getSupportFragmentManager(), "");
+
+        });
+
+        imgClearPad.setOnClickListener(v -> {
+
+        });
 
     }
 
@@ -40,11 +81,11 @@ public class SignatureCreatorActivity extends AppCompatActivity {
 
         int id = item.getItemId();
 
-        if (id==R.id.menu_export){
+        if (id == R.id.menu_export) {
             Log.d("tag", "onOptionsItemSelected: export");
         }
 
-        if (id==R.id.menu_info){
+        if (id == R.id.menu_info) {
             Log.d("tag", "onOptionsItemSelected: info");
         }
 
