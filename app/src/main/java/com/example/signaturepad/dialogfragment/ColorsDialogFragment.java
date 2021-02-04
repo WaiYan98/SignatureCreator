@@ -1,4 +1,4 @@
-package com.example.signaturepad.fragment;
+package com.example.signaturepad.dialogfragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

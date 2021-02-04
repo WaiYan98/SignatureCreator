@@ -8,16 +8,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 
-import com.example.signaturepad.fragment.ColorsDialogFragment;
-import com.example.signaturepad.fragment.PenSizeDialogFragment;
+import com.example.signaturepad.dialogfragment.Alert;
+import com.example.signaturepad.dialogfragment.ColorsDialogFragment;
+import com.example.signaturepad.dialogfragment.PenSizeDialogFragment;
+import com.github.gcacace.signaturepad.views.SignaturePad;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SignatureCreatorActivity extends AppCompatActivity {
+public class SignatureCreatorActivity extends AppCompatActivity implements Alert.CallBack {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -29,7 +30,8 @@ public class SignatureCreatorActivity extends AppCompatActivity {
     ImageView imgBackgroundColor;
     @BindView(R.id.img_clear_pad)
     ImageView imgClearPad;
-
+    @BindView(R.id.signature_pad)
+    SignaturePad signaturePad;
     private ColorsDialogFragment colorsDialogFragment;
 
     @Override
@@ -65,6 +67,9 @@ public class SignatureCreatorActivity extends AppCompatActivity {
 
         imgClearPad.setOnClickListener(v -> {
 
+            Alert alert = new Alert(this);
+            alert.show(getSupportFragmentManager(), "");
+
         });
 
     }
@@ -90,5 +95,11 @@ public class SignatureCreatorActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onclickYes() {
+
+        signaturePad.clear();
     }
 }
