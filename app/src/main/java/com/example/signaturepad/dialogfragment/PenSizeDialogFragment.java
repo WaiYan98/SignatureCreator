@@ -3,6 +3,7 @@ package com.example.signaturepad.dialogfragment;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.telecom.Call;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -25,6 +26,15 @@ public class PenSizeDialogFragment extends DialogFragment {
     SeekBar seekBarPenSize;
     @BindView(R.id.txt_pen_size)
     TextView txtPenSize;
+    private CallBack callBack;
+
+    private PenSizeDialogFragment() {
+
+    }
+
+    public void setCallBack(CallBack callBack) {
+        this.callBack = callBack;
+    }
 
     @NonNull
     @Override
@@ -61,9 +71,21 @@ public class PenSizeDialogFragment extends DialogFragment {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 
+                callBack.onSlideSeekBar(seekBar.getProgress());
             }
         });
 
         return dialog;
+    }
+
+    public static PenSizeDialogFragment getNewInstance() {
+        PenSizeDialogFragment penSizeDialogFragment = new PenSizeDialogFragment();
+        return penSizeDialogFragment;
+    }
+
+
+    public interface CallBack {
+
+        void onSlideSeekBar(int penSize);
     }
 }

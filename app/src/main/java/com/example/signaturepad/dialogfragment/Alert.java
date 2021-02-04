@@ -25,8 +25,11 @@ public class Alert extends DialogFragment {
 
     private CallBack callBack;
 
-    public Alert(CallBack callBack) {
+    private Alert() {
 
+    }
+
+    public void setCallBack(CallBack callBack) {
         this.callBack = callBack;
     }
 
@@ -57,7 +60,12 @@ public class Alert extends DialogFragment {
         return dialog;
     }
 
-   public interface CallBack {
+    public static Alert getNewInstance() {
+        Alert alert = new Alert();
+        return alert;
+    }
+
+    public interface CallBack {
 
         void onclickYes();
     }

@@ -10,13 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SignaturePad">
         <activity android:name=".SignatureCreatorActivity">
+
+        </activity>
+        <activity android:name=".SetupActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".SetupActivity">
 
         </activity>
     </application>
