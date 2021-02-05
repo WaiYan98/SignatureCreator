@@ -74,11 +74,11 @@ public class ColorsDialogFragment extends DialogFragment {
         return dialog;
     }
 
-    public static ColorsDialogFragment getNewInstance(String btnName) {
+    public static ColorsDialogFragment getNewInstance(String key, String btnName) {
 
         ColorsDialogFragment colorsDialogFragment = new ColorsDialogFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(EXTRA_BTN_NAME, btnName);
+        bundle.putString(key, btnName);
         colorsDialogFragment.setArguments(bundle);
         return colorsDialogFragment;
     }

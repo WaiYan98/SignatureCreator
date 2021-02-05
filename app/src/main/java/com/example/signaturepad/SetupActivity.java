@@ -55,5 +55,6 @@ public class SetupActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, SignatureCreatorActivity.class);
         startActivity(intent);
+        finish();
     }
 }

@@ -9,10 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SignaturePad">
-        <activity android:name=".SignatureCreatorActivity">
+        <activity android:name=".ExportActivity">
 
         </activity>
-        <activity android:name=".SetupActivity">
+
+        <activity android:name=".SignatureCreatorActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +22,12 @@
             </intent-filter>
 
         </activity>
+
+        <activity android:name=".SetupActivity">
+
+
+        </activity>
+
     </application>
 
 </manifest>

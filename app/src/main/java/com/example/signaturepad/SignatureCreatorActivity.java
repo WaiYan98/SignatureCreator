@@ -1,9 +1,16 @@
 package com.example.signaturepad;
 
+import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -15,6 +22,8 @@ import com.example.signaturepad.dialogfragment.Alert;
 import com.example.signaturepad.dialogfragment.ColorsDialogFragment;
 import com.example.signaturepad.dialogfragment.PenSizeDialogFragment;
 import com.github.gcacace.signaturepad.views.SignaturePad;
+
+import java.io.ByteArrayOutputStream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,7 +64,7 @@ public class SignatureCreatorActivity extends AppCompatActivity implements Alert
 
         imgColor.setOnClickListener(v -> {
 
-            colorsDialogFragment = ColorsDialogFragment.getNewInstance(ColorsAdapter.PEN_COLOR_BTN);
+            colorsDialogFragment = ColorsDialogFragment.getNewInstance(ColorsDialogFragment.EXTRA_BTN_NAME, ColorsAdapter.PEN_COLOR_BTN);
             colorsDialogFragment.setCallBack(this);
             colorsDialogFragment.show(getSupportFragmentManager(), "");
 
@@ -63,7 +72,7 @@ public class SignatureCreatorActivity extends AppCompatActivity implements Alert
 
         imgBackgroundColor.setOnClickListener(v -> {
 
-            colorsDialogFragment = ColorsDialogFragment.getNewInstance(ColorsAdapter.BACKGROUND_COLOR_BTN);
+            colorsDialogFragment = ColorsDialogFragment.getNewInstance(ColorsDialogFragment.EXTRA_BTN_NAME, ColorsAdapter.BACKGROUND_COLOR_BTN);
             colorsDialogFragment.setCallBack(this);
             colorsDialogFragment.show(getSupportFragmentManager(), "");
 
@@ -92,11 +101,20 @@ public class SignatureCreatorActivity extends AppCompatActivity implements Alert
         int id = item.getItemId();
 
         if (id == R.id.menu_export) {
-            Log.d("tag", "onOptionsItemSelected: export");
+
+            Bitmap bitmap = signaturePad.getTransparentSignatureBitmap();
+            byte[] byteArray = convertBitmapToByteArray(bitmap);
+
+            ColorDrawable colorDrawable = (ColorDrawable) signaturePad.getBackground();
+            int color = colorDrawable.getColor();
+
+            goToExportActivity(byteArray, color);
+
         }
 
         if (id == R.id.menu_info) {
             Log.d("tag", "onOptionsItemSelected: info");
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -126,4 +144,21 @@ public class SignatureCreatorActivity extends AppCompatActivity implements Alert
         signaturePad.setBackgroundColor(getResources().getColor(color));
 
     }
+
+    public byte[] convertBitmapToByteArray(Bitmap bitmap) {
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        return stream.toByteArray();
+    }
+
+    public void goToExportActivity(byte[] byteArray,int color) {
+
+        Intent intent = new Intent(SignatureCreatorActivity.this, ExportActivity.class);
+        intent.putExtra(ExportActivity.EXTRA_BITMAP, byteArray);
+        intent.putExtra(ExportActivity.EXTRA_COLOR, color);
+        startActivity(intent);
+        finish();
+    }
+
 }
