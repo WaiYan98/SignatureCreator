@@ -7,6 +7,8 @@
         android:id="@+id/img_color_icon"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@drawable/color_circle" />
+        android:src="@drawable/color_circle"
+        android:foreground="?selectableItemBackgroundBorderless"
+        android:clickable="true"/>
 
 </LinearLayout>

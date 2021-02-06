@@ -105,15 +105,15 @@ public class SignatureCreatorActivity extends AppCompatActivity implements Alert
             Bitmap bitmap = signaturePad.getTransparentSignatureBitmap();
             byte[] byteArray = convertBitmapToByteArray(bitmap);
 
-            ColorDrawable colorDrawable = (ColorDrawable) signaturePad.getBackground();
-            int color = colorDrawable.getColor();
+            int color = drawableToColor(signaturePad.getBackground());
 
             goToExportActivity(byteArray, color);
 
         }
 
         if (id == R.id.menu_info) {
-            Log.d("tag", "onOptionsItemSelected: info");
+
+            goToInfoActivity();
 
         }
 
@@ -152,11 +152,30 @@ public class SignatureCreatorActivity extends AppCompatActivity implements Alert
         return stream.toByteArray();
     }
 
-    public void goToExportActivity(byte[] byteArray,int color) {
+    public int drawableToColor(Drawable drawable) {
+
+        if (drawable != null) {
+
+            ColorDrawable colorDrawable = (ColorDrawable) drawable;
+            int color = colorDrawable.getColor();
+
+            return color;
+        }
+
+        return 0;
+    }
+
+    public void goToExportActivity(byte[] byteArray, int color) {
 
         Intent intent = new Intent(SignatureCreatorActivity.this, ExportActivity.class);
         intent.putExtra(ExportActivity.EXTRA_BITMAP, byteArray);
         intent.putExtra(ExportActivity.EXTRA_COLOR, color);
+        startActivity(intent);
+        finish();
+    }
+
+    public void goToInfoActivity() {
+        Intent intent = new Intent(SignatureCreatorActivity.this, InfoActivity.class);
         startActivity(intent);
         finish();
     }
